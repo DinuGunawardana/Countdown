@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<meta property="og:title" content="Kidnapped in Her Own Home: The Martha Carelli Story">
+<meta property="og:description" content="Stana Katic stars in a gripping thriller. Countdown to May 2, 2026.">
+<meta property="og:image" content="https://masksl.42web.io/Countdown/preview.jpg">
+
+<meta name="twitter:title" content="Kidnapped in Her Own Home">
+<meta name="twitter:description" content="The countdown begins. May 2, 2026.">
+<meta name="twitter:image" content="https://masksl.42web.io/Countdown/preview.jpg">
+
+<title>Kidnapped in Her Own Home | Countdown to May 2, 2026</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: black;
+    color: white;
+}
+
+/* 🎥 BACKGROUND LAYERS */
+.bg {
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    background: url('background.jpg') center/cover no-repeat;
+    transform: scale(1.05);
+    filter: brightness(0.55) contrast(1.15) saturate(0.85);
+}
+
+.color-grade {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(0,120,130,0.25), rgba(120,0,0,0.35));
+    mix-blend-mode: overlay;
+}
+
+.vignette {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9));
+}
+
+.grain {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+    opacity: 0.15;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+}
+
+/* 🎬 CONTENT */
+.container {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #ff3c3c;
+    letter-spacing: 2px;
+}
+
+h2 {
+    margin-top: 10px;
+    font-weight: 300;
+    opacity: 0.85;
+}
+
+.release {
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+/* ⏳ COUNTDOWN */
+.countdown {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(255,0,0,0.2);
+    min-width: 90px;
+}
+
+.time {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.label {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* 🌍 LOCATION */
+.location {
+    margin-top: 25px;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+/* 🎬 TRAILER BUTTON */
+.trailer-btn {
+    margin-top: 40px;
+    padding: 12px 25px;
+    border: none;
+    background: red;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 0 20px red;
+}
+
+.cast {
+    margin-top: 25px;
+    opacity: 0;
+}
+
+.cast-line {
+    font-size: 0.95rem;
+    margin: 6px 0;
+    letter-spacing: 1px;
+}
+
+.actor {
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.role {
+    margin-left: 6px;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+/* subtle glow */
+.cast-line {
+    text-shadow: 0 0 8px rgba(255,255,255,0.1);
+}
+
+/* 🎬 Overlay */
+.actor-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 🎭 Card */
+.actor-card {
+    position: relative;
+    width: 320px;
+    height: 480px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(255,0,0,0.3);
+}
+
+/* 🎥 Image */
+.actor-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) contrast(1.2);
+}
+
+/* 🎯 Text */
+.actor-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+}
+
+.actor-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.actor-role {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* ✨ Glow pulse */
+.actor-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 40px rgba(255,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<!-- Layers -->
+<div class="bg"></div>
+<div class="color-grade"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div class="overlay"></div>
+
+<!-- Content -->
+<div class="container">
+    <h1 id="title">Kidnapped in Her Own Home: The Martha Carelli Story</h1>
+    <div class="cast">
+        <div class="cast-line">
+            <span class="actor">Stana Katic</span>
+            <span class="role">as Martha Carelli</span>
+        </div>
+        <div class="cast-line">
+            <span class="actor">Tyler Tomás Perez</span>
+            <span class="role">as Michael Anderson</span>
+        </div>
+    </div>
+    <div class="release">Coming out Saturday, May 2 at 8/7c p.m.</div>
+
+    <div class="countdown">
+        <div class="time-box"><div id="days" class="time">00</div><div class="label">Days</div></div>
+        <div class="time-box"><div id="hours" class="time">00</div><div class="label">Hours</div></div>
+        <div class="time-box"><div id="minutes" class="time">00</div><div class="label">Minutes</div></div>
+        <div class="time-box"><div id="seconds" class="time">00</div><div class="label">Seconds</div></div>
+    </div>
+
+    <div id="location" class="location"></div>
+
+    <button class="trailer-btn" id="trailerBtn">🎬 Watch Trailer</button>
+</div>
+
+<div class="actor-overlay" id="actorOverlay">
+
+    <div class="actor-card" id="actorCard">
+        <img id="actorImage" src="" />
+
+        <div class="actor-text">
+            <div id="actorName" class="actor-name"></div>
+            <div id="actorRole" class="actor-role"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 🔊 AUDIO -->
+<audio id="tick" src="https://www.soundjay.com/clock/sounds/clock-ticking-01.mp3"></audio>
+<audio id="heartbeat" src="https://www.soundjay.com/human/sounds/heartbeat-01.mp3"></audio>
+
+<script>
+const targetDate = new Date("May 2, 2026 00:00:00").getTime();
+const tickSound = document.getElementById("tick");
+const heartbeat = document.getElementById("heartbeat");
+
+// 🎬 INTRO
+gsap.from("#title", {y:-50, opacity:0, duration:1});
+gsap.from("#subtitle", {opacity:0, duration:1, delay:0.5});
+gsap.from(".time-box", {opacity:0, y:50, stagger:0.2, delay:1});
+
+// 🎭 Cast reveal (cinematic timing)
+gsap.to(".cast", {
+    opacity: 1,
+    duration: 1,
+    delay: 1.8
+});
+
+gsap.from(".cast-line", {
+    y: 20,
+    opacity: 0,
+    stagger: 0.4,
+    duration: 1,
+    delay: 2
+});
+
+// 🎥 BACKGROUND MOTION
+gsap.to(".bg", {
+    scale:1.15,
+    x:"-2%",
+    y:"-2%",
+    duration:25,
+    repeat:-1,
+    yoyo:true
+});
+
+// 🌍 LOCATION
+fetch("https://ipapi.co/json/")
+.then(res => res.json())
+.then(data => {
+    document.getElementById("location").innerText =
+        "Your Timezone: " + data.timezone + " (" + data.city + ")";
+});
+
+// ⏳ COUNTDOWN
+function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    if(diff < 0){
+        document.querySelector(".countdown").style.display = "none";
+        document.querySelector(".release").innerText = "Now Streaming 🎬";
+        document.getElementById("trailerBtn").style.display = "inline-block";
+        return;
+    }
+
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff/(1000*60*60))%24);
+    const m = Math.floor((diff/(1000*60))%60);
+    const s = Math.floor((diff/1000)%60);
+
+    set("days", d);
+    set("hours", h);
+    set("minutes", m);
+    set("seconds", s);
+
+    // 🔊 tick
+    tickSound.currentTime = 0;
+    tickSound.play().catch(()=>{});
+
+    // 💥 last 5 seconds
+    if(d===0 && h===0 && m===0 && s<=5){
+        heartbeat.play().catch(()=>{});
+        gsap.to(".container", {
+            x: "random(-5,5)",
+            y: "random(-5,5)",
+            duration: 0.1,
+            repeat: 10,
+            yoyo: true
+        });
+    }
+}
+
+function set(id, val){
+    const el = document.getElementById(id);
+    const newVal = String(val).padStart(2,'0');
+
+    if(el.innerText !== newVal){
+        gsap.fromTo(el,
+            {scale:1.5, opacity:0},
+            {scale:1, opacity:1, duration:0.3}
+        );
+    }
+
+    el.innerText = newVal;
+}
+
+// 🎭 Actor Data
+const actors = [
+    {
+        name: "Stana Katic",
+        role: "as Martha Carelli",
+        image: "IMG_1180.webp"
+    },
+    {
+        name: "Tyler Tomás Perez",
+        role: "as Michael Anderson",
+        image: "tyler.jpg"
+    }
+];
+
+// 🎬 Reveal Function
+function showActor(actor){
+
+    const overlay = document.getElementById("actorOverlay");
+
+    document.getElementById("actorImage").src = actor.image;
+    document.getElementById("actorName").innerText = actor.name;
+    document.getElementById("actorRole").innerText = actor.role;
+
+    const tl = gsap.timeline();
+
+    tl.to(overlay, {
+        opacity: 1,
+        duration: 0.5,
+        pointerEvents: "auto"
+    });
+
+    tl.from(".actor-card", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+    });
+
+    tl.from("#actorName", {
+        y: 20,
+        opacity: 0,
+        duration: 0.6
+    }, "-=0.5");
+
+    tl.from("#actorRole", {
+        y: 15,
+        opacity: 0,
+        duration: 0.6
+    }, "-=0.4");
+
+    // Hold
+    tl.to({}, {duration: 2});
+
+    // Exit
+    tl.to(".actor-card", {
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.6
+    });
+
+    tl.to(overlay, {
+        opacity: 0,
+        duration: 0.5,
+        pointerEvents: "none"
+    });
+}
+
+// 🎯 Sequence after intro
+setTimeout(() => {
+    showActor(actors[0]);
+
+    setTimeout(() => {
+        showActor(actors[1]);
+    }, 2000);
+
+}, 5000);
+
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+// 🎬 TRAILER BUTTON ACTION
+document.getElementById("trailerBtn").onclick = () => {
+    window.open("https://www.youtube.com", "_blank"); // replace with actual trailer
+};
+</script>
+
+</body>
+</html>
