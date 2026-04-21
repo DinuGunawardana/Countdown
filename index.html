@@ -256,7 +256,8 @@ h2 {
             <span class="role">as Michael Anderson</span>
         </div>
     </div>
-    <div class="release">Coming out Saturday, May 2 at 8/7c p.m.</div>
+    <!-- <div class="release">Coming out Saturday, May 2 at 8/7c p.m.</div> -->
+    <div class="release"></div>
 
     <div class="countdown">
         <div class="time-box"><div id="days" class="time">00</div><div class="label">Days</div></div>
@@ -293,14 +294,27 @@ const tickSound = document.getElementById("tick");
 const heartbeat = document.getElementById("heartbeat");
 const releaseDate = new Date("2026-05-02T20:00:00-04:00");
 
-document.querySelector(".release").innerText =
-    "Streaming on " + releaseDate.toLocaleString([], {
+function updateReleaseText(diff) {
+    const releaseEl = document.querySelector(".release");
+
+    if (diff <= 0) {
+        releaseEl.innerHTML = "Now Streaming on Lifetime 🎬";
+        return;
+    }
+
+    const localRelease = releaseDate.toLocaleString([], {
         weekday: 'long',
         month: 'long',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
     });
+
+    releaseEl.innerHTML = `
+        Coming May 2 at 8/7c PM (Lifetime)<br>
+        <small>Available in your region: ${localRelease}</small>
+    `;
+}
 
 // 🎬 INTRO
 gsap.from("#title", {y:-50, opacity:0, duration:1});
@@ -344,10 +358,19 @@ fetch("https://ipapi.co/json/")
 function updateCountdown() {
     const now = new Date().getTime();
     const diff = targetDate - now;
+    updateReleaseText(diff);
+
+    // if(diff < 0){
+    //     document.querySelector(".countdown").style.display = "none";
+    //     document.querySelector(".release").innerText = "Now Streaming 🎬";
+    //     document.getElementById("trailerBtn").style.display = "inline-block";
+    //     return;
+    // }
+
+    updateReleaseText(diff);
 
     if(diff < 0){
         document.querySelector(".countdown").style.display = "none";
-        document.querySelector(".release").innerText = "Now Streaming 🎬";
         document.getElementById("trailerBtn").style.display = "inline-block";
         return;
     }
